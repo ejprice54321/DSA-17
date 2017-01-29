@@ -17,7 +17,9 @@ public class MyLinkedList {
 	}
 
 	public MyLinkedList() {
-		// TODO
+		head = null;
+		tail = null;
+		size = 0;
 	}
 
 	public int size() {
@@ -37,30 +39,54 @@ public class MyLinkedList {
 	}
 
 	public void addLast(Chicken c) {
-		// TODO
+		if (isEmpty()){
+			head = new Node(c, null, null);
+		} else {
+			Node newNode = new Node(c, tail, null);
+		}
+		size++
 	}
 
 	public void addFirst(Chicken c) {
-		// TODO
+		if (isEmpty()){
+			head = new Node(c, null, null);
+		} else {
+			Node newNode = new Node(c, null, head);
+		}
+		size++;
 	}
 
 	public Chicken get(int index) {
-		// TODO
-		return null;
+		if (index < 0 || index >= size){
+			throw new IndexOutOfBoundsException();
+		}
+		Node node = head;
+		for (int i=0; i<index; i++){
+			node = node.next;
+		}
+		return node;
 	}
 
 	public Chicken remove(int index) {
-		// TODO
+		Chicken c = get(index);
+		if (index == 0){
+			head = head.next;
+		} else{
+			Node node = node.prev;
+
+		}
 		return null;
 	}
 
 	public Chicken removeFirst() {
 		// TODO
+		size --;
 		return null;
 	}
 
 	public Chicken removeLast() {
 		// TODO
+		size--;
 		return null;
 	}
 }
