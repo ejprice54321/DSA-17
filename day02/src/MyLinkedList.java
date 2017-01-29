@@ -44,7 +44,7 @@ public class MyLinkedList {
 		} else {
 			Node newNode = new Node(c, tail, null);
 		}
-		size++
+		size++;
 	}
 
 	public void addFirst(Chicken c) {
@@ -64,7 +64,7 @@ public class MyLinkedList {
 		for (int i=0; i<index; i++){
 			node = node.next;
 		}
-		return node;
+		return node.val;
 	}
 
 	public Chicken remove(int index) {
@@ -72,7 +72,11 @@ public class MyLinkedList {
 		if (index == 0){
 			head = head.next;
 		} else{
+			for (int i=0; i>index && i <size; i++){
+
+			}
 			Node node = node.prev;
+			Node nextNode = Node(get(index), get(index-1), get)
 
 		}
 		return null;
