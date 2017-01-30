@@ -1,15 +1,15 @@
-public class MyLinkedList {
+public class MyLinkedList<T> {
 
 	private Node head;
 	private Node tail;
 	private int size;
 
 	private class Node {
-		Chicken val;
+		T val;
 		Node prev;
 		Node next;
 
-		private Node(Chicken d, Node prev, Node next) {
+		private Node(T d, Node prev, Node next) {
 			this.val = d;
 			this.prev = prev;
 			this.next = next;
@@ -30,67 +30,97 @@ public class MyLinkedList {
 		return size == 0;
 	}
 
-	public void add(Chicken c) {
-		addLast(c);
+	public void add(T e) {
+		addLast(e);
 	}
 
-	public Chicken pop() {
+	public T pop() {
 		return removeLast();
 	}
 
-	public void addLast(Chicken c) {
+	public void addLast(T e) {
 		if (isEmpty()){
-			head = new Node(c, null, null);
+			head = new Node(e, null, null);
+			tail = head;
 		} else {
-			Node newNode = new Node(c, tail, null);
+			Node newNode = new Node(e, tail, null);
+			tail.next = newNode;
+			tail = newNode;
 		}
 		size++;
 	}
 
-	public void addFirst(Chicken c) {
+	public void addFirst(T e) {
 		if (isEmpty()){
-			head = new Node(c, null, null);
+			head = new Node(e, null, null);
 		} else {
-			Node newNode = new Node(c, null, head);
+			Node newNode = new Node(e, null, head);
+			head.prev = newNode;
+			head = newNode;
 		}
 		size++;
 	}
 
-	public Chicken get(int index) {
-		if (index < 0 || index >= size){
-			throw new IndexOutOfBoundsException();
-		}
-		Node node = head;
-		for (int i=0; i<index; i++){
-			node = node.next;
-		}
+	public T get(int index) {
+		Node node = getNode(index);
 		return node.val;
 	}
 
-	public Chicken remove(int index) {
-		Chicken c = get(index);
-		if (index == 0){
-			head = head.next;
-		} else{
-			for (int i=0; i>index && i <size; i++){
-
+	public Node getNode(int index){
+			if (index < 0 || index >= size){
+				throw new IndexOutOfBoundsException();
 			}
-			Node node = node.prev;
-			Node nextNode = Node(get(index), get(index-1), get)
+			Node node = head;
+			for (int i=0; i<index; i++){
+				node = node.next;
+			}
+			return node;
+	}
 
+	public T remove(int index) {
+		T c = get(index);
+		if (index == 0){
+			return removeFirst(); // ask NINJA if return statement is necessary
+		} else if (index == (size-1)){
+			return removeLast();
+		} else {
+			Node n = getNode(index);
+			n.prev.next = n.next;
+			n.next.prev = n.prev;
+			size--;
+			return n.val;
 		}
-		return null;
 	}
 
-	public Chicken removeFirst() {
-		// TODO
+	public T removeFirst() {
+		if (isEmpty()){
+			throw new IndexOutOfBoundsException();
+		}
+		T problem = head.val;
+		if (size == 1){
+			head = null;
+			tail = null;
+		}else {
+			head.prev = null;
+			head = head.next;
+		}
 		size --;
-		return null;
+		return problem;
 	}
 
-	public Chicken removeLast() {
-		// TODO
+	public T removeLast() {
+		if (isEmpty()){
+			throw new IndexOutOfBoundsException();
+		}
+		T problem = tail.val;
+		if (size == 1){
+			head = null;
+			tail = null;
+		} else {
+			tail = tail.prev;
+			tail.next = null;
+		}
 		size--;
-		return null;
+		return problem;
 	}
 }
