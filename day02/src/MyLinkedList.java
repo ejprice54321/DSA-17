@@ -53,6 +53,7 @@ public class MyLinkedList<T> {
 	public void addFirst(T e) {
 		if (isEmpty()){
 			head = new Node(e, null, null);
+			tail = head;
 		} else {
 			Node newNode = new Node(e, null, head);
 			head.prev = newNode;
