@@ -36,7 +36,7 @@ public class MyStack implements StackADT<Integer> {
     }
 
     @Override
-    public Integer pop() {git pu
+    public Integer pop() {
         Integer lastElement = stackList[size];
         stackList[size] = stackList[size+1];
         size--;

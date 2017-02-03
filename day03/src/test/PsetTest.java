@@ -12,6 +12,10 @@ public class PsetTest {
 
     @Test
     public void testLongestValidSubstring() {
+
+        assertThat(PsetProblems.longestValidSubstring("(("), is(0));
+        assertThat(PsetProblems.longestValidSubstring("()"), is(2));
+        assertThat(PsetProblems.longestValidSubstring(")("), is(0));
         assertThat(PsetProblems.longestValidSubstring("(()))("), is(4));
         assertThat(PsetProblems.longestValidSubstring("(()()))()"), is(6));
         assertThat(PsetProblems.longestValidSubstring("))(("), is(0));
@@ -38,5 +42,6 @@ public class PsetTest {
         assertThat(r.pop(), is(7));
         assertThat(r.pop(), is(19));
     }
+
 
 }
