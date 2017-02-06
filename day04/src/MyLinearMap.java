@@ -1,3 +1,4 @@
+import java.time.temporal.ValueRange;
 import java.util.*;
 
 /**
@@ -44,8 +45,11 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	// Returns the entry that contains the target key, or null if there is none.
 	private Entry findEntry(Object target) {
-		// TODO
-		return null;
+		for (int i=0; i<entries.size(); i++){
+			if (equals(target, entries.get(i).getKey())){
+				return entries.get(i);
+			}
+		} return null;
 	}
 
 	// Compares two keys or two values, handling null correctly.
@@ -73,8 +77,11 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V get(Object key) {
-		// TODO
-		return null;
+		if (!containsKey(key)){
+			return null;
+		}else{
+			return findEntry(key).getValue();
+		}
 	}
 
 	@Override
@@ -93,8 +100,16 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V put(K key, V value) {
-		// TODO
-		return null;
+		if (containsKey(key)){
+			V oldValue = findEntry(key).getValue();
+			findEntry(key).value = value;
+			return oldValue;
+		} else{
+			Entry newEntry = new Entry(key, value);
+			entries.add(newEntry);
+			return null;
+		}
+
 	}
 
 	@Override
@@ -106,8 +121,13 @@ public class MyLinearMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V remove(Object key) {
-		// TODO
-		return null;
+		if (containsKey(key)){
+			Entry oldEntry = findEntry(key);
+			entries.remove(oldEntry);
+			return oldEntry.getValue();
+		}else{
+			return null;
+		}
 	}
 
 	@Override
