@@ -75,9 +75,9 @@ public class MyHashMap<K, V> implements Map<K, V> {
 
 	protected void rehash(double growthFactor) {
 		List<MyLinearMap<K,V>> oldMaps = maps;
-		int newSize = size()*(int)growthFactor;
+		int newSize = (int) (oldMaps.size()*growthFactor);
 		makeMaps(newSize);
-		System.out.println("size " + size + " newSize " + newSize + " GROWTH_FACTOR " + GROWTH_FACTOR);
+		size = 0;
 		for (MyLinearMap<K,V> m : oldMaps){
 			for (K key: m.keySet()){
 				V value = m.get(key);
@@ -96,12 +96,10 @@ public class MyHashMap<K, V> implements Map<K, V> {
 	public V put(K key, V value) {
 		MyLinearMap<K,V> map = chooseMap(key);
 		size -= map.size();
-//		System.out.println("RemoveSize " + size);
 		V oldValue = map.put(key,value);
 		size += map.size();
 		//check if there are too many submaps
 		if (size > maps.size()*ALPHA){
-			System.out.println("MapSize " + maps.size() + " ALPHA " + ALPHA);
 			rehash(GROWTH_FACTOR);
 		}
 		return oldValue;
@@ -109,12 +107,12 @@ public class MyHashMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V remove(Object key) {
-		MyLinearMap<K,V> oldMap = chooseMap(key);
-		V oldValue = oldMap.remove(key);
-		size--;
+		MyLinearMap<K,V> map = chooseMap(key);
+		size -= map.size();
+		V oldValue = map.remove(key);
+		size += map.size();
 		//check if there are too many submaps
-		System.out.println(maps.size()*BETA + "  " + size());
-		if (size() > maps.size()*BETA){
+		if ((size < maps.size()*BETA) && (maps.size()*SHRINK_FACTOR >=16)){
 			rehash(SHRINK_FACTOR);
 		}
 		return oldValue;
