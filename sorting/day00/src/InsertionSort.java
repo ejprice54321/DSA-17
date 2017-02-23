@@ -13,14 +13,12 @@ public class InsertionSort extends SortAlgorithm {
     public int[] sort(int[] array) {
         for (int i = 0; i<array.length; i++){
             if (i == 0){
-
             }
             while (array[i] < array[i-1]){
-                int temp = array[i-1];
-                array[i-1] = array[i];
-                array[i] = temp;
+                swap(array, array[i], array[i-1]);
             }
         }
         return array;
     }
+
 }
