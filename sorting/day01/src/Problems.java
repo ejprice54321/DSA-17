@@ -1,3 +1,5 @@
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +44,30 @@ public class Problems {
      */
     public static double[] runningMedian(int[] inputStream) {
         double[] runningMedian = new double[inputStream.length];
-        // TODO
+        PriorityQueue<Integer> minPQ = minPQ();
+        PriorityQueue<Integer> maxPQ = maxPQ();
+        int index = 0;
+        for (int i: inputStream){
+            if (maxPQ.isEmpty() || i < maxPQ.peek()) {
+                maxPQ.offer(i);
+            } else {
+                minPQ.offer(i);
+            }
+            if (maxPQ.size() < minPQ.size()) {
+                maxPQ.offer(minPQ.poll());
+            } else if (minPQ.size() + 1 < maxPQ.size()) {
+                minPQ.offer(maxPQ.poll());
+            }
+            if (maxPQ.size() == minPQ.size()){
+                runningMedian[index] = (minPQ.peek()+ maxPQ.peek())/2.0;
+                index ++;
+            } else if (maxPQ.size() > minPQ.size()) {
+                runningMedian[index] = maxPQ.peek();
+                index++;
+            } else {
+                System.out.println("OOPSIES");
+            }
+        }
         return runningMedian;
     }
 

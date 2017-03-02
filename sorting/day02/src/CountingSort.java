@@ -1,3 +1,5 @@
+import static sun.swing.MenuItemLayoutHelper.max;
+
 public class CountingSort {
 
     /**
@@ -5,7 +7,18 @@ public class CountingSort {
      * Runtime: TODO
      */
     static void countingSort(int[] A) {
-        // TODO
+        int k = max(A);
+        int[] counts = new int[k+1];
+        for (int e: A) {
+            counts[e]++;
+        }
+        int i = 0;
+        for (int j = 0; j <= k; j++) {
+            while(counts[j]-- > 0){
+                A[i++] = j;
+            }
+        }
+
     }
 
 }
