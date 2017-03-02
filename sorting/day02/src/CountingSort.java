@@ -4,7 +4,7 @@ public class CountingSort {
 
     /**
      * Use counting sort to sort positive integer array A.
-     * Runtime: TODO
+     * Runtime: O(3n+k)
      *
      * k: maximum element in array A
      */

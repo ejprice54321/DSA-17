@@ -36,7 +36,7 @@ public class RadixSort {
     }
 
     /**
-     * Runtime: TODO: Express your runtime in terms of n, b, and w
+     * Runtime: ????????????????
      *
      * n: length of array
      * w: word length of integers A in base b (equal to log base b of k (log_b k) )
@@ -49,7 +49,9 @@ public class RadixSort {
         for (int i = 1; i < A.length; i++)
             k = (A[i] + 1 > k) ? A[i] + 1 : k;
         int w = (int) Math.ceil(Math.log(k) / Math.log(b)); // w = log base b of k, word length of numbers
-
+        for (int j = 0; j < w; j++) {
+            countingSortByDigit(A, b, j);
+        }
     }
 
 }
