@@ -18,7 +18,10 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     TreeNode<T> insert(TreeNode<T>  n, T key) {
         n = super.insert(n,key);
         if(n != null) {
-            // TODO: update height and balance tree
+            n = super.insert(n, key);
+            // TODO: update height
+            n = balance(n);
+            return n;
         }
         return null;
     }
@@ -60,8 +63,7 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T> {
      * most one.
      */
     private int balanceFactor(TreeNode<T> n) {
-        // TODO
-        return 0;
+        int bf = height(n.rightChild) - height(n.leftChild);
     }
 
     /**
