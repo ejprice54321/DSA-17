@@ -5,7 +5,21 @@ import java.util.Queue;
 public class LevelOrderTraversal {
 
     public static List<Integer> levelOrderTraversal(TreeNode<Integer> n) {
-        // TODO: Your code here
-        return null;
+        Queue<TreeNode> q = new LinkedList<>();
+        List<Integer> l = new LinkedList<>();
+
+        q.offer(n);
+
+        while (!q.isEmpty()){
+            TreeNode<Integer> m = q.poll();
+            l.add(m.key);
+            if (m.hasLeftChild()){
+                q.offer(m.leftChild);
+            }
+            if (m.hasRightChild()){
+                q.offer(m.rightChild);
+            }
+        }
+        return l;
     }
 }

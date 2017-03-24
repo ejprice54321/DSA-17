@@ -1,46 +1,65 @@
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import sun.plugin.dom.core.Node;
+import sun.security.provider.certpath.Vertex;
+
+import java.util.*;
 
 public class UndirectedGraph implements Graph {
 
+    int e;
+
+    Map<Integer, List<Integer>> adjMap;
+
+    ArrayList<Integer> vert;
+
     public UndirectedGraph(int n) {
-        // TODO: Your code here
+        //O(v)
+        adjMap = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            adjMap.put(i, new LinkedList<>());
+        }
+        vert = new ArrayList<>(adjMap.keySet());
     }
 
     @Override
     public void addEdge(int v, int w) {
-        // TODO: Your code here
+        //O(1)
+        this.e++;
+        adjMap.get(v).add(w);
+        adjMap.get(w).add(v);
     }
 
     @Override
+    //O(1)
     public List<Integer> vertices() {
-    	// TODO: Your code here
-        return null;
+        return vert;
     }
 
     @Override
+    //O(1)
     public int numVertices() {
-    	// TODO: Your code here
-        return 0;
+        return vert.size();
     }
 
     @Override
+    //O(1)
     public int numEdges() {
-    	// TODO: Your code here
-        return 0;
+        return e;
     }
 
     @Override
+    //O(1)
     public Iterable<Integer> getNeighbors(int v) {
-    	// TODO: Your code here
-        return null;
+        return adjMap.get(v);
     }
 
     @Override
+    //O(e/v)
     public boolean hasEdgeBetween(int v, int w) {
-    	// TODO: Your code here
+        for (int element: getNeighbors(v)){
+            if (element == w){
+                return true;
+            }
+        }
         return false;
     }
 
