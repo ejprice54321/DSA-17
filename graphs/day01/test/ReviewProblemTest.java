@@ -35,6 +35,7 @@ public class ReviewProblemTest {
         assertThat(ReviewProblem.minimumLengthSubArray(A2, 12), is(2));
         assertThat(ReviewProblem.minimumLengthSubArray(A2, 17), is(2));
         assertThat(ReviewProblem.minimumLengthSubArray(A2, 28), is(5));
+        assertThat(ReviewProblem.minimumLengthSubArray(A2, 39), is(10));
         assertThat(ReviewProblem.minimumLengthSubArray(A2, 49), is(12));
         assertThat(ReviewProblem.minimumLengthSubArray(A2, 87), is(24));
     }
