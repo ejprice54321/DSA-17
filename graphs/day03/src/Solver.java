@@ -61,7 +61,14 @@ public class Solver {
      * and a identify the shortest path to the the goal state
      */
     public Solver(Board initial) {
-    	// TODO: Your code here
+        State initialState = new State(initial, 0, null);
+
+        List<State> open = new LinkedList<>();
+        List<State> closed = new LinkedList<>();
+        open.add(initialState);
+
+
+
     }
 
     /*
