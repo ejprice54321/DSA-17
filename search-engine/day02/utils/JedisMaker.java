@@ -101,13 +101,15 @@ public class JedisMaker {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-        // TODO
 
 		Jedis jedis = make();
 
-        // clearAll(jedis);
+		//clearAll(jedis);
 
 		// String
+		jedis.set("mykey","myvalue");
+		String value = jedis.get("mykey");
+		System.out.println(value);
         /*
         - Create a new key-value pair
         - Retrieve that value
@@ -115,7 +117,10 @@ public class JedisMaker {
          */
 
 		// Set
-        /*
+		jedis.sadd("sorts","quick","merge","heap");
+		System.out.println(jedis.sismember("sorts","merge"));
+		System.out.println(jedis.sismember("sorts","insertion"));
+		/*
         - Create a new jedis set named "sorts" with the values
         "quick", "merge", "heap"
         - Print whether "merge" is a member of that set
@@ -123,13 +128,19 @@ public class JedisMaker {
          */
 
 		// List
-        /*
+		jedis.rpush("lineards","stakcs","queues","lists");
+		System.out.println(jedis.lindex("lineards", 0) + jedis.lindex("lineards",2));
+		/*
         - Create a new list named "lineards" with the elements
         "stacks", "queues", "lists"
         - Print the elements at the 0th and 2nd indices of that list
          */
 
 		// Hash
+		jedis.hset("myhash","word1", Integer.toString(2));
+		jedis.hincrBy("myhash","word1", 1);
+		jedis.hincrBy("myhash","word2", 1);
+		System.out.println(jedis.hget("myhash", "word1") + jedis.hget("myhash", "word2"));
 		/*
 		- Create a new hash named "myhash", mapping the key "word1" to
 		the value "2", but do not use the string literal
@@ -137,7 +148,5 @@ public class JedisMaker {
 		- Increment the nonexistent key "word2" by 1
 		- Retrieve and print the values at both keys in the hash "myhash"
 		*/
-
-	    jedis.close();
 	}
 }

@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.Set;
 
 import redis.clients.jedis.Jedis;
@@ -20,6 +21,7 @@ public class JedisMaker {
 	 */
 	public static Jedis make() throws IOException {
 		// assemble the directory name
+		//constructs the filepath for the file
 		String slash = File.separator;
 		String filename = System.getProperty("user.dir") + slash +
 				"resources" + slash + "redis_url.txt";
@@ -43,6 +45,8 @@ public class JedisMaker {
 		}
 		br.close();
 
+
+		//URI = like a url, but it contains the host, port, and authentication
 		URI uri;
 		try {
 			uri = new URI(sb.toString());
@@ -52,14 +56,20 @@ public class JedisMaker {
 			printInstructions();
 			return null;
 		}
+		//get info from URI
 		String host = uri.getHost();
 		int port = uri.getPort();
 
+
+		//spilt array to get authentication
 		String[] array = uri.getAuthority().split("[:@]");
 		String auth = array[1];
 
+
+		//create jedis
 		Jedis jedis = new Jedis(host, port);
 
+		//try to authenticate and return instance of jedis, otherwise bad stuff happens
 		try {
 			jedis.auth(auth);
 		} catch (Exception e) {
@@ -105,9 +115,12 @@ public class JedisMaker {
 
 		Jedis jedis = make();
 
-        // clearAll(jedis);
+        //clearAll(jedis);
 
 		// String
+		jedis.set("mykey","myvalue");
+		String value = jedis.get("mykey");
+		System.out.println(value);
         /*
         - Create a new key-value pair
         - Retrieve that value
@@ -115,7 +128,10 @@ public class JedisMaker {
          */
 
 		// Set
-        /*
+        jedis.sadd("sorts","quick","merge","heap");
+		System.out.println(jedis.sismember("sorts","merge"));
+		System.out.println(jedis.sismember("sorts","insertion"));
+		/*
         - Create a new jedis set named "sorts" with the values
         "quick", "merge", "heap"
         - Print whether "merge" is a member of that set
@@ -123,13 +139,19 @@ public class JedisMaker {
          */
 
 		// List
-        /*
+        jedis.rpush("lineards","stakcs","queues","lists");
+		System.out.println(jedis.lindex("lineards", 0) + jedis.lindex("lineards",2));
+		/*
         - Create a new list named "lineards" with the elements
         "stacks", "queues", "lists"
         - Print the elements at the 0th and 2nd indices of that list
          */
 
 		// Hash
+		jedis.hset("myhash","word1", Integer.toString(2));
+		jedis.hincrBy("myhash","word1", 1);
+		jedis.hincrBy("myhash","word2", 1);
+		System.out.println(jedis.hget("myhash", "word1") + jedis.hget("myhash", "word2"));
 		/*
 		- Create a new hash named "myhash", mapping the key "word1" to
 		the value "2", but do not use the string literal
