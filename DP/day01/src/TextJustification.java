@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class TextJustification {
-    static List<Integer> starts = new ArrayList<>();
 
     public static List<Integer> justifyText(String[] w, int m) {
         int[] textMemo = new int[w.length+1];
@@ -9,22 +8,33 @@ public class TextJustification {
         for (int i=0; i < textMemo.length; i++){
             textMemo[i] = -1;
         }
-        int test = justifyRecursion(w, m, 0, textMemo);
+        int[] trace = new int[w.length];
+        int test = justifyRecursion(w, m, 0, textMemo, trace);
+        List<Integer> starts = new ArrayList<>();
+        int i = 0;
+        while (i < w.length){
+            starts.add(i);
+            i = trace[i];
+        }
         return starts;
     }
 
-    private static int justifyRecursion(String[] w, int m, int i, int[] textMemo){
+    private static int justifyRecursion(String[] w, int m, int i, int[] textMemo, int[] trace){
         int minCost = (int)Double.POSITIVE_INFINITY;
-        int totCost = 0;
-        if (i == w.length) return 0;
-        for (int j = i+1; j < w.length; j++){
-            if(textMemo[j] == -1) justifyRecursion(w, m, j, textMemo);
-            else{
-                totCost = cost(Arrays.copyOfRange(w, i, j), m) + textMemo[j];
-                minCost = totCost;
+        int curCost = 0;
+        for (int j = i+1; j <= w.length; j++){
+            if(textMemo[j] == -1) justifyRecursion(w, m, j, textMemo, trace);
+            if (cost(Arrays.copyOfRange(w, i, j), m) == (int)Double.POSITIVE_INFINITY){
+                curCost = (int)Double.POSITIVE_INFINITY;;
+            } else {
+                curCost = cost(Arrays.copyOfRange(w, i, j), m) + textMemo[j];
+                if (curCost < minCost) {
+                    minCost = curCost;
+                    trace[i] = j;
+                }
             }
-            textMemo[i] = minCost;
         }
+        textMemo[i] = minCost;
         return minCost;
     }
 
@@ -34,9 +44,9 @@ public class TextJustification {
             totalLength += w.length();
         }
         if (totalLength > m){
-            return 2147483647;
+            return (int)Double.POSITIVE_INFINITY;
         } else {
-            return (int)Math.pow((m - totalLength), 3);
+            return (int)Math.pow((m-totalLength), 3);
         }
     }
 

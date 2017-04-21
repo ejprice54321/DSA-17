@@ -16,13 +16,12 @@ public class PuzzleTest {
 	@Before
 	public void setUp() throws Exception {
         int[][] initState = {{1, 2, 3}, {4, 5, 6}, {7, 0, 8}};
-=======
+
     private Board board;
 
     @Before
     public void setUp() throws Exception {
         int[][] initState = {{1, 2, 3}, {4, 6, 0}, {7, 5, 8}};
->>>>>>> 3bbf1207809af93aab507dd0be8dfc019223e97d
         board = new Board(initState);
     }
 
